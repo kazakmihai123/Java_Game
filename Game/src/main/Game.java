@@ -1,15 +1,15 @@
 package main;
 
+import graphics.GamePanel;
 import graphics.GameWindow;
 import java.lang.*;
 
+import static java.lang.Thread.sleep;
+
 public class Game implements Runnable {
     private boolean running;
-    GameWindow window;
-
-    public Game(GameWindow window) {
-        this.window = window;
-    }
+    GamePanel gamePanel = new GamePanel();
+    GameWindow gameWindow = new GameWindow(gamePanel);
 
     public void start() {
         running = true;
@@ -21,23 +21,23 @@ public class Game implements Runnable {
     public void run() {
         final int FPS = 60;
         final double timePerFrame = 1_000_000_000.0 / FPS;
-        long lastFrameTime = System.nanoTime();
+        long previousTime = System.nanoTime();
 
-        while(running) {
+        while (running) {
             long currentTime = System.nanoTime();
-            if (currentTime - lastFrameTime >= timePerFrame) {
+            if (currentTime - previousTime >= timePerFrame) {
                 updateGame();
                 renderGame();
-                lastFrameTime = currentTime;
+                previousTime = currentTime;
             }
         }
     }
 
     private void updateGame() {
-        System.out.println("Update Game !");
+        gamePanel.update();
     }
 
     private void renderGame() {
-        System.out.println("Render Game !");
+        gamePanel.repaint();
     }
 }

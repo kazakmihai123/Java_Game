@@ -3,13 +3,17 @@ package graphics;
 import javax.swing.*;
 
 public class GameWindow extends JFrame {
-    public GameWindow()
+
+    public GameWindow(GamePanel gamePanel)
     {
         setTitle("Joc Java");
-        setSize(800, 600);
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setVisible(true);
+
+        add(gamePanel);
+        pack();
+
         setLocationRelativeTo(null);
+        setVisible(true);
     }
 }
