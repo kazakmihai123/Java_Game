@@ -1,14 +1,9 @@
 package utils;
 
-import org.jetbrains.annotations.NotNull;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
-
-import static utils.Constants.tileSize;
 
 public class ResourceLoader {
 
@@ -19,8 +14,7 @@ public class ResourceLoader {
     BufferedImage spriteSheet;
     BufferedImage[][] frames;
 
-    public ResourceLoader(String path, int row, int col)
-    {
+    public ResourceLoader(String path, int row, int col) {
         spriteSheet = loadImage(path);
 
         frames = new BufferedImage[row][col];
@@ -43,7 +37,6 @@ public class ResourceLoader {
     }
 
     /// Încărcare imagine
-    @org.jetbrains.annotations.Nullable
     public BufferedImage loadImage(String path) {
         try {
             BufferedImage spriteSheet = ImageIO.read(ResourceLoader.class.getResource(path));
@@ -60,7 +53,7 @@ public class ResourceLoader {
     }
 
     /// Roteste imaginea
-    public @NotNull BufferedImage rotateImage(BufferedImage img, double angleDegrees) {
+    public BufferedImage rotateImage(BufferedImage img, double angleDegrees) {
         double rads = Math.toRadians(angleDegrees);
 
         int width = img.getWidth();

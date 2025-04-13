@@ -1,9 +1,15 @@
 package inputs;
 
+import graphics.GamePanel;
+
 import javax.swing.*;
 import java.awt.event.*;
 
+import static utils.Constants.*;
+
 public class KeyboardInput extends KeyAdapter implements MouseListener {
+
+    GamePanel gp;
 
     private boolean
             upPressed,
@@ -16,24 +22,91 @@ public class KeyboardInput extends KeyAdapter implements MouseListener {
 
     private int mouseX, mouseY;
 
+    // CONSTRUCTOR
+    public KeyboardInput(GamePanel gp) {
+        this.gp = gp;
+    }
+
     @Override
     public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_W:
-                upPressed = true;
-                break;
-            case KeyEvent.VK_S:
-                downPressed = true;
-                break;
-            case KeyEvent.VK_A:
-                leftPressed = true;
-                break;
-            case KeyEvent.VK_D:
-                rightPressed = true;
-                break;
-            case KeyEvent.VK_ESCAPE:
-                escapeClick = true;
-                break;
+        if (gp.gameState == titleState) {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_W:
+                    gp.ui.commandCnt--;
+                    if (gp.ui.commandCnt < 0)
+                        gp.ui.commandCnt = 2;
+                    break;
+                case KeyEvent.VK_S:
+                    gp.ui.commandCnt++;
+                    if (gp.ui.commandCnt > 2)
+                        gp.ui.commandCnt = 0;
+                    break;
+                case KeyEvent.VK_ENTER:
+                    if (gp.ui.commandCnt == 0)
+                    {
+                        String nextMap = "/maps/map0" + gp.currentLevel + ".txt";
+                        gp.levelLoader.loadLevel(nextMap);
+                        gp.gameState = playState;
+                    }
+                    else if (gp.ui.commandCnt == 1)
+                    {
+                        //to do load
+                    }
+                    else if (gp.ui.commandCnt == 2)
+                        System.exit(0);
+                    break;
+            }
+        }
+        else if (gp.gameState == deadState) {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_W:
+                    gp.ui.commandCnt--;
+                    if (gp.ui.commandCnt < 0)
+                        gp.ui.commandCnt = 1;
+                    break;
+                case KeyEvent.VK_S:
+                    gp.ui.commandCnt++;
+                    if (gp.ui.commandCnt > 1)
+                        gp.ui.commandCnt = 0;
+                    break;
+                case KeyEvent.VK_ENTER:
+                    if (gp.ui.commandCnt == 0)
+                    {
+                        gp.currentLevel = 1;
+                        String nextMap = "/maps/map0" + gp.currentLevel + ".txt";
+                        gp.levelLoader.loadLevel(nextMap);
+                        gp.gameState = playState;
+                    }
+                    else if (gp.ui.commandCnt == 1)
+                        System.exit(0);
+                    break;
+            }
+        }
+        else
+        {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_W:
+                    upPressed = true;
+                    break;
+                case KeyEvent.VK_S:
+                    downPressed = true;
+                    break;
+                case KeyEvent.VK_A:
+                    leftPressed = true;
+                    break;
+                case KeyEvent.VK_D:
+                    rightPressed = true;
+                    break;
+                case KeyEvent.VK_ESCAPE:
+                    System.exit(0);
+                    break;
+                case KeyEvent.VK_P:
+                    if (gp.gameState == playState)
+                        gp.gameState = pauseState;
+                    else if (gp.gameState == pauseState)
+                        gp.gameState = playState;
+                    break;
+            }
         }
     }
 
@@ -51,9 +124,6 @@ public class KeyboardInput extends KeyAdapter implements MouseListener {
                 break;
             case KeyEvent.VK_D:
                 rightPressed = false;
-                break;
-            case KeyEvent.VK_ESCAPE:
-                escapeClick = true;
                 break;
         }
     }

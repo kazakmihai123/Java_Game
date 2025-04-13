@@ -17,4 +17,19 @@ public class Constants {
     public static final int maxWorldRow = 50;
     public static final int worldWidth = tileSize * maxWorldCol;
     public static final int worldHeight = tileSize * maxWorldRow;
+
+    // DIRECTION
+    public enum ShootDirection
+    {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT
+    }
+
+    // GAME STATE
+    public static int titleState = 0;
+    public static int playState = 1;
+    public static int pauseState = 2;
+    public static int deadState = 3;
 }
