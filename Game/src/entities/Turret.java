@@ -1,9 +1,6 @@
 package entities;
 
 import graphics.GamePanel;
-import inputs.KeyboardInput;
-
-import java.awt.*;
 
 import static utils.Constants.*;
 
@@ -15,7 +12,7 @@ public class Turret extends Entity {
     public final int screenY;
 
     private long lastShotTime = 0;
-    private long shootCooldown;
+    private final long shootCooldown;
 
     ShootDirection shootDirection;
 

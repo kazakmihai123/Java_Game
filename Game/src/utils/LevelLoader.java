@@ -1,7 +1,6 @@
 package utils;
 
 import entities.Player;
-import entities.Slime;
 import graphics.GamePanel;
 import objects.OBJ_Door;
 
@@ -22,22 +21,26 @@ public class LevelLoader {
         // 2. Golește obiectele vechi (dacă există)
         gp.objectManager.objects.clear();
 
+
+        // ENEMY
+        gp.enemySetter.load(gp.currentLevel);
+        // TURRETS
+        gp.turretSetter.load(gp.currentLevel);
+
         // 3. Adaugă obiecte specifice level-ului
         // Aici poți folosi if-uri pe `mapFile` sau să ai o convenție per nivel
         if (mapFile.equals("/maps/map01.txt")) {
-
             // Sterge player si creaza;
             gp.player = new Player();
-            // ENEMY
-            gp.enemySetter.load(gp.currentLevel);
-            // TURRETS
-            gp.turretSetter.load(gp.currentLevel);
+            gp.player.setDefaultValues("level_01");
 
             gp.objectManager.addObject(new OBJ_Door(), 12 * tileSize, 9 * tileSize); // 36 41
-            gp.player.setDefaultValues("level_01");
         } else if (mapFile.equals("/maps/map02.txt")) {
+            gp.enemySetter.load(gp.currentLevel);
+            gp.turretSetter.load(gp.currentLevel);
             gp.objectManager.addObject(new OBJ_Door(), 25 * tileSize, 18 * tileSize);
             gp.player.setDefaultValues("level_02");
         }
+
     }
 }

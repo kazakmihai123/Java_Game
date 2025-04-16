@@ -12,11 +12,6 @@ import static utils.Constants.*;
 
 public class UI {
 
-    Graphics g;
-
-    // Exemplu de stare a jucătorului
-    private int playerMaxHP = 100;
-    private int playerCurrentHP = 75;
     private BufferedImage healthBarImage;
 
     // Exemplu de scor

@@ -10,7 +10,7 @@ import static utils.Constants.*;
 public class Slime extends Entity {
 
     private boolean movingLeft = true;
-    private int maxHP = 20;
+    private final int maxHP = 20;
     private int currentHP = maxHP;
 
     public Slime(double spawnX, double spawnY) {

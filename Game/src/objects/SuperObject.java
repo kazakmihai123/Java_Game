@@ -3,8 +3,6 @@ package objects;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static utils.Constants.*;
-
 public class SuperObject {
     public BufferedImage image;
     public String name;

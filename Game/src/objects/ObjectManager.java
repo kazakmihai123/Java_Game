@@ -54,6 +54,9 @@ public class ObjectManager {
                     if ("tiles/map1/door".equals(obj.name)) {
                         gp.loadNextLevel();
                     }
+                    else if ("tiles/map2/door".equals(obj.name)) {
+                        gp.loadNextLevel();
+                    }
                 }
             }
         }

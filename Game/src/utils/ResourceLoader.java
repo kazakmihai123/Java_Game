@@ -10,7 +10,6 @@ public class ResourceLoader {
     private int width;
     private int height;
 
-    String path;
     BufferedImage spriteSheet;
     BufferedImage[][] frames;
 
@@ -19,20 +18,13 @@ public class ResourceLoader {
 
         frames = new BufferedImage[row][col];
 
-        try
-        {
-            width = spriteSheet.getWidth() / col;
-            height = spriteSheet.getHeight() / row;
+        width = spriteSheet.getWidth() / col;
+        height = spriteSheet.getHeight() / row;
 
-            for (int j = 0; j < row; j++) {
-                for (int i = 0; i < col; i++) {
-                    frames[j][i] = spriteSheet.getSubimage(i * width, j * height, width, height);
-                }
+        for (int j = 0; j < row; j++) {
+            for (int i = 0; i < col; i++) {
+                frames[j][i] = spriteSheet.getSubimage(i * width, j * height, width, height);
             }
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
         }
     }
 
@@ -48,6 +40,9 @@ public class ResourceLoader {
             return spriteSheet;
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
             return null;
         }
     }

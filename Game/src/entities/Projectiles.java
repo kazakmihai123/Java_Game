@@ -2,10 +2,7 @@ package entities;
 
 import graphics.GamePanel;
 import utils.ResourceLoader;
-
 import java.awt.*;
-import java.awt.image.BufferedImage;
-
 import static utils.Constants.*;
 
 public class Projectiles extends Entity {

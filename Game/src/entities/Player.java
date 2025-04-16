@@ -2,16 +2,9 @@ package entities;
 
 import graphics.GamePanel;
 import inputs.KeyboardInput;
-
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-
 import static utils.Constants.*;
 import utils.ResourceLoader;
-
-import javax.imageio.ImageIO;
 
 public class Player extends Entity {
 
@@ -122,8 +115,8 @@ public class Player extends Entity {
                 break;
             case"level_02":
                 // START POSITION
-                worldX = tileSize * 14;
-                worldY = tileSize * 9;
+                worldX = tileSize * 24;
+                worldY = tileSize * 23;
                 break;
         }
 

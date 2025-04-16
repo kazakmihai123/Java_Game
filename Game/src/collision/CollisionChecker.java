@@ -80,7 +80,7 @@ public class CollisionChecker {
             }
 
             int tileNum = gp.tileManager.mapTileNum[col][row];
-            if (gp.tileManager.tiles[tileNum].collision) {
+            if (tileNum != -1 && gp.tileManager.tiles[tileNum].collision) {
                 entity.collisionOn = true;
             }
         }

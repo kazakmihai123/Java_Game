@@ -74,6 +74,7 @@ public class GamePanel extends JPanel {
 
             if (player.getCurrentHP() == 0)
                 gameState = deadState;
+
         }
 
         ui.draw(g, player, this);

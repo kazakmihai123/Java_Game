@@ -105,7 +105,8 @@ public class TileManager {
                 String[] numbers = line.split(" +");
 
                 for (col = 0; col < maxWorldCol; col++) {
-                    mapTileNum[col][row] = Integer.parseInt(numbers[col]);
+                    int value = Integer.parseInt(numbers[col]);
+                    mapTileNum[col][row] = (value == 99) ? -1 : value;
                 }
                 row++;
             }
@@ -127,12 +128,14 @@ public class TileManager {
 
                 int tileNum = mapTileNum[worldCol][worldRow];
 
-                if (worldX + tileSize > p.worldX - p.screenX &&
-                    worldX - tileSize < p.worldX + p.screenX &&
-                    worldY + tileSize > p.worldY - p.screenY &&
-                    worldY - tileSize < p.worldY + p.screenY) {
-                    tileSetForMap_01.drawFrame(g, tiles[0].image, screenX, screenY, 2, tileSize);
-                    tileSetForMap_01.drawFrame(g, tiles[tileNum].image, screenX, screenY, 2, tileSize);
+                if (tileNum != -1) {
+                    if (worldX + tileSize > p.worldX - p.screenX &&
+                            worldX - tileSize < p.worldX + p.screenX &&
+                            worldY + tileSize > p.worldY - p.screenY &&
+                            worldY - tileSize < p.worldY + p.screenY) {
+                        tileSetForMap_01.drawFrame(g, tiles[0].image, screenX, screenY, 2, tileSize);
+                        tileSetForMap_01.drawFrame(g, tiles[tileNum].image, screenX, screenY, 2, tileSize);
+                    }
                 }
             }
         }

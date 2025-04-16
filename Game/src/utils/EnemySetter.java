@@ -27,7 +27,7 @@ public class EnemySetter {
                 break;
 
             case 2:
-                slimes.add(new Slime(15 * tileSize, 18 * tileSize));
+                //slimes.add(new Slime(15 * tileSize, 18 * tileSize));
                 break;
 
             default:
