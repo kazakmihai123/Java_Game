@@ -41,21 +41,26 @@ public class ObjectManager {
     }
 
     public void checkObjectCollision(Player player) {
-        for (SuperObject obj : objects) {
+        for (int i = 0; i < objects.size(); i++) {
+            SuperObject obj = objects.get(i);
+
             if (obj != null && obj.collision) {
-                Rectangle playerArea = new Rectangle((int)player.worldX + player.solidArea.x,
+                Rectangle playerArea = new Rectangle(
+                        (int)player.worldX + player.solidArea.x,
                         (int)player.worldY + player.solidArea.y,
                         player.solidArea.width,
-                        player.solidArea.height);
+                        player.solidArea.height
+                );
 
                 Rectangle objArea = new Rectangle(obj.worldX, obj.worldY, tileSize, tileSize);
 
                 if (playerArea.intersects(objArea)) {
-                    if ("tiles/map1/door".equals(obj.name)) {
+                    if ("tiles/map1/door".equals(obj.name) || "tiles/map2/door".equals(obj.name)) {
                         gp.loadNextLevel();
-                    }
-                    else if ("tiles/map2/door".equals(obj.name)) {
-                        gp.loadNextLevel();
+                    } else if ("potion".equals(obj.name) && obj instanceof OBJ_Potion potion) {
+                        player.heal(potion.getHealAmount());
+                        objects.remove(i);
+                        i--; // Ajustăm indexul după remove
                     }
                 }
             }

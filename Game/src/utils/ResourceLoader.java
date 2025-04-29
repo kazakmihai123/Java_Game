@@ -82,8 +82,7 @@ public class ResourceLoader {
         g.drawImage(currentImg, drawX, drawY, scaledWidth, scaledHeight, null);
     }
 
-    public void drawFrame(Graphics g, BufferedImage f, double worldX, double worldY, int scale, int tileSize)
-    {
+    public void drawFrame(Graphics g, BufferedImage f, double worldX, double worldY, int scale, int tileSize) {
         int scaledWidth = width * scale;
         int scaledHeight = height * scale;
 

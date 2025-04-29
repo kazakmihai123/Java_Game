@@ -1,9 +1,6 @@
 package collision;
 
-import entities.Entity;
-import entities.Player;
-import entities.Projectiles;
-import entities.Slime;
+import entities.*;
 import graphics.GamePanel;
 
 import static utils.Constants.*;
@@ -28,7 +25,7 @@ public class CollisionChecker {
 
         int tileNum1, tileNum2;
 
-        if (entity instanceof Player || entity instanceof Slime) {
+        if (entity instanceof Player || entity instanceof Slime || entity instanceof Skeleton) {
             switch (entity.currentAnimationState) {
                 case Entity.AnimationState.WALKING_UP:
                     entityTopRow = (entityTopWorldY - entity.speed) / tileSize;

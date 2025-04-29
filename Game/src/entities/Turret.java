@@ -6,7 +6,7 @@ import static utils.Constants.*;
 
 public class Turret extends Entity {
 
-    int dmg = 10;
+    int dmg = 20;
 
     public final int screenX;
     public final int screenY;

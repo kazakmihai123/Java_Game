@@ -11,8 +11,7 @@ public class Tile {
         GRASS, WALL, WATER, TELEPORT, LAVA
     }
 
-    public Tile(BufferedImage image, boolean collision)
-    {
+    public Tile(BufferedImage image, boolean collision) {
         this.image = image;
         this.collision = collision;
     }

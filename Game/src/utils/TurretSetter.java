@@ -15,8 +15,7 @@ public class TurretSetter {
         this.gp = gp;
     }
 
-    public void load(int currLevel)
-    {
+    public void load(int currLevel) {
         turrets.clear();
         switch (currLevel)
         {
@@ -29,12 +28,14 @@ public class TurretSetter {
                 turrets.add(new Turret(13, 38, Constants.ShootDirection.UP, 1000));
                 break;
             case 2:
+                turrets.add(new Turret(48, 27, Constants.ShootDirection.DOWN, 1000));
+                turrets.add(new Turret(46, 27, Constants.ShootDirection.DOWN, 2000));
+                turrets.add(new Turret(47, 27, Constants.ShootDirection.DOWN, 3000));
                 break;
         }
     }
 
-    public void update()
-    {
+    public void update() {
         for (Turret t : turrets)
             t.update(gp);
     }

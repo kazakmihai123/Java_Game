@@ -13,19 +13,19 @@ public class Player extends Entity {
 
     // SHOOT
     private long lastShotTime = 0;
-    private final long shootCooldown = 1000; // Adica o secunda
+    private final long shootCooldown = 800;
     private int dmg;
 
     // HP
-    private int maxHP = 100;
+    private final int maxHP = 100;
     private int currentHP;
     private long lastDamageTime = 0;
-    private final long invincibilityDuration = 750; // 0.75 secundă în milisecunde
+    private final long invincibilityDuration = 500; // 0.75 secundă în milisecunde
 
     public Player() {
 
         dmg = 10;
-        speed = 15;
+        speed = 7;
 
         screenX = screenWidth / 2 - tileSize / 2;
         screenY = screenHeight / 2 - tileSize / 2;
@@ -110,13 +110,16 @@ public class Player extends Entity {
                 worldX = tileSize * 14;
                 worldY = tileSize * 9;
 
-                currentHP = 70;
-                maxHP = 100; // HP
+                currentHP = 100;
                 break;
             case"level_02":
                 // START POSITION
                 worldX = tileSize * 24;
                 worldY = tileSize * 23;
+                break;
+            case "level_03":
+                worldX = tileSize * 9;
+                worldY = tileSize * 27;
                 break;
         }
 
@@ -160,4 +163,14 @@ public class Player extends Entity {
         return new Rectangle((int) worldX + solidArea.x, (int) worldY + solidArea.y, solidArea.width, solidArea.height);
     }
 
+    public void heal(int amount) {
+        currentHP += amount;
+        if (currentHP > maxHP) {
+            currentHP = maxHP;
+        }
+    }
+
+    public void setHP(int hp) {
+        currentHP = Math.max(0, Math.min(hp, maxHP));
+    }
 }

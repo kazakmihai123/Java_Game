@@ -3,6 +3,7 @@ package graphics;
 import collision.CollisionChecker;
 import entities.Player;
 import entities.Projectiles;
+import entities.Skeleton;
 import entities.Slime;
 import inputs.KeyboardInput;
 import objects.ObjectManager;
@@ -19,7 +20,7 @@ import static utils.Constants.*;
 public class GamePanel extends JPanel {
 
     /// TILES M.
-    public TileManager tileManager = new TileManager();
+    public TileManager tileManager = new TileManager(this);
     /// KEYBOARD
     KeyboardInput keyboardInput = new KeyboardInput(this);
     /// PLAYER
@@ -27,7 +28,7 @@ public class GamePanel extends JPanel {
     /// COLLISIONS
     public CollisionChecker collisionChecker = new CollisionChecker(this); // Collisions
     /// PROJECTILES
-    ArrayList<Projectiles> projectiles = new ArrayList<>();
+    public ArrayList<Projectiles> projectiles = new ArrayList<>();
     /// TURRETS
     public TurretSetter turretSetter = new TurretSetter(this);
     /// UI
@@ -50,14 +51,14 @@ public class GamePanel extends JPanel {
         addMouseListener(keyboardInput);
         setDoubleBuffered(true);
 
-        gameState = titleState;
-
-//        String nextMap = "/maps/map0" + currentLevel + ".txt";
-//        levelLoader.loadLevel(nextMap);
+        gameState = endingState;
     }
 
     @Override protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, getWidth(), getHeight());
 
         if (gameState == playState || gameState == pauseState){
             tileManager.draw(g, player);
@@ -90,7 +91,12 @@ public class GamePanel extends JPanel {
             // Coliziune slime <-> player
             for (Slime s : enemySetter.slimes) {
                 if (s.getHitbox().intersects(player.getHitbox())) {
-                    player.takeDamage(10);
+                    player.takeDamage(15);
+                }
+            }
+            for (Skeleton s : enemySetter.skeletons) {
+                if (s.getHitbox().intersects(player.getHitbox())) {
+                    player.takeDamage(30);
                 }
             }
 
@@ -106,8 +112,34 @@ public class GamePanel extends JPanel {
                 if (p.getFromWho()) {
                     for (Slime s : enemySetter.slimes) {
                         if (p.getActive() && s.getHitbox().intersects(p.getHitbox())) {
+                            boolean wasDead = s.isDead();
                             s.takeDamage(p.getDmg());
+                            if (!wasDead && s.isDead()) {
+                                ui.setScore(ui.getScore() + 50); // sau orice punctaj vrei
+                            }
                             p.setInactive();
+                        }
+                    }
+                    for (Skeleton s : enemySetter.skeletons) {
+                        if (p.getActive() && s.getHitbox().intersects(p.getHitbox())) {
+                            boolean wasDead = s.isDead();
+                            s.takeDamage(p.getDmg());
+                            if (!wasDead && s.isDead()) {
+                                ui.setScore(ui.getScore() + 100); // alt scor pentru skeleton?
+                            }
+                            p.setInactive();
+                        }
+                    }
+                    if (p.getActive() && enemySetter.finalBoss != null && enemySetter.finalBoss.getHitbox().intersects(p.getHitbox())) {
+                        boolean wasDead = enemySetter.finalBoss.isDead();
+                        enemySetter.finalBoss.takeDamage(p.getDmg());
+
+                        p.setInactive();
+
+                        if (!wasDead && enemySetter.finalBoss.isDead()) {
+                            ui.setScore(ui.getScore() + 1000);
+                            gameState = endingState;
+                            ui.commandCnt = 0;
                         }
                     }
                 } else {

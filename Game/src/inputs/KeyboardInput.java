@@ -1,6 +1,7 @@
 package inputs;
 
 import graphics.GamePanel;
+import utils.GameSaveManager;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -51,6 +52,8 @@ public class KeyboardInput extends KeyAdapter implements MouseListener {
                     else if (gp.ui.commandCnt == 1)
                     {
                         //to do load
+                        GameSaveManager.load(gp);
+                        gp.gameState = playState;
                     }
                     else if (gp.ui.commandCnt == 2)
                         System.exit(0);
@@ -82,14 +85,49 @@ public class KeyboardInput extends KeyAdapter implements MouseListener {
                     break;
             }
         }
-        else
-        {
+        else if (gp.gameState == endingState) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_W:
-                    upPressed = true;
+                    gp.ui.commandCnt--;
+                    if (gp.ui.commandCnt < 0)
+                        gp.ui.commandCnt = 1;
                     break;
                 case KeyEvent.VK_S:
-                    downPressed = true;
+                    gp.ui.commandCnt++;
+                    if (gp.ui.commandCnt > 1)
+                        gp.ui.commandCnt = 0;
+                    break;
+                case KeyEvent.VK_ENTER:
+                    if (gp.ui.commandCnt == 0)
+                    {
+                        gp.gameState = titleState;
+                    }
+                    else if (gp.ui.commandCnt == 1)
+                        System.exit(0);
+                    break;
+            }
+        }
+        else {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_W:
+                    if (gp.gameState == playState) {
+                        upPressed = true;
+                    }
+                    else {
+                        gp.ui.commandCnt--;
+                        if (gp.ui.commandCnt < 0)
+                            gp.ui.commandCnt = 1;
+                    }
+                    break;
+                case KeyEvent.VK_S:
+                    if (gp.gameState == playState) {
+                        downPressed = true;
+                    }
+                    else {
+                        gp.ui.commandCnt++;
+                        if (gp.ui.commandCnt > 1)
+                            gp.ui.commandCnt = 0;
+                    }
                     break;
                 case KeyEvent.VK_A:
                     leftPressed = true;
@@ -101,10 +139,23 @@ public class KeyboardInput extends KeyAdapter implements MouseListener {
                     System.exit(0);
                     break;
                 case KeyEvent.VK_P:
-                    if (gp.gameState == playState)
+                    if (gp.gameState == playState) {
                         gp.gameState = pauseState;
+                        gp.ui.commandCnt = 0;
+                    }
                     else if (gp.gameState == pauseState)
                         gp.gameState = playState;
+                    break;
+                case KeyEvent.VK_K: // Save
+                    GameSaveManager.save(gp);
+                    break;
+                case KeyEvent.VK_ENTER:
+                    if (gp.gameState == pauseState) {
+                        if (gp.ui.commandCnt == 0) {
+                            GameSaveManager.save(gp);
+                        } else if (gp.ui.commandCnt == 1)
+                            System.exit(0);
+                    }
                     break;
             }
         }

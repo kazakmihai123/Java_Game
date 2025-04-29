@@ -10,7 +10,7 @@ public class OBJ_Door extends SuperObject {
         ResourceLoader res = new ResourceLoader("/tiles/map1/door/castle_door.png", 1, 6);
         image = res.getFrame(0, 1);
 
-        System.out.println(image);
+        // System.out.println(image);
 
         collision = true; // Blochează trecerea până la coliziune + interacțiune
     }

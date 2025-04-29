@@ -62,7 +62,8 @@ public class UI {
 
         if (gp.gameState == titleState) {
             drawTitleScreen(g2);
-        } else if (gp.gameState == playState || gp.gameState == pauseState){
+        }
+        else if (gp.gameState == playState || gp.gameState == pauseState){
             g2.setColor(Color.WHITE);
 
             // Exemplu: Desenare scor
@@ -75,9 +76,11 @@ public class UI {
             if (gp.gameState == pauseState)
                 drawPauseScreen(g2);
         }
-        else if (gp.gameState == deadState)
-        {
+        else if (gp.gameState == deadState) {
             drawDeadScreen(g2);
+        }
+        else if (gp.gameState == endingState) {
+            drawEndingScreen(g2);
         }
     }
 
@@ -87,6 +90,37 @@ public class UI {
         g.fillRect(0, 0, screenWidth, screenHeight);
         g.setColor(Color.white);
         g.drawString("PAUSE", screenWidth / 2 - 100, screenHeight / 2);
+
+
+        g.setFont(underDogFont.deriveFont(32f));
+        String text = "SAVE";
+        g.setColor(Color.gray);
+        int x = getCenteredX(text, g);
+        int y = getCenteredY(g) + 160;
+        g.drawString(text, x, y);
+        if (commandCnt == 0) // pentru vizualiazarea pozitiei
+        {
+            FontMetrics fm = g.getFontMetrics();
+            int textWidth = fm.stringWidth(text);
+
+            g.drawString(">", x - 32, y);
+            g.drawString("<", x + textWidth + 20, y);
+        }
+
+        // EXIT BUTTON
+        text = "EXIT";
+        x = getCenteredX(text, g);
+        y += 96;
+        g.drawString(text, x, y);
+        if (commandCnt == 1)
+        {
+            FontMetrics fm = g.getFontMetrics();
+            int textWidth = fm.stringWidth(text);
+
+            g.drawString(">", x - 28, y);
+            g.drawString("<", x + textWidth + 12, y);
+        }
+
     }
 
     private void drawTitleScreen(Graphics2D g) {
@@ -200,6 +234,70 @@ public class UI {
 
     }
 
+    private void drawEndingScreen(Graphics2D g) {
+        // Fundal
+        g.setColor(Color.darkGray);
+        g.fillRect(0, 0, screenWidth, screenHeight);
+
+        // Text
+        g.setFont(underDogFont.deriveFont(60f));
+        String text = "Congratulations!";
+        int x = getCenteredX(text, g);
+        int y = screenHeight / 3;
+
+        // SHADOW
+        g.setColor(Color.black);
+        g.drawString(text, x + 5, y + 5);
+
+        // TEXT
+        g.setColor(Color.white);
+        g.drawString(text, x, y);
+
+        // *** Scorul afișat sub "Congratulations!" ***
+        g.setFont(underDogFont.deriveFont(36f)); // puțin mai mic decât titlul
+        String scoreText = "Your Score: " + score; // presupun că ai câmpul `score`
+        int scoreX = getCenteredX(scoreText, g);
+        int scoreY = y + 80; // puțin mai jos față de titlu
+
+        // SHADOW scor
+        g.setColor(Color.black);
+        g.drawString(scoreText, scoreX + 3, scoreY + 3);
+
+        g.setColor(Color.white);
+        g.drawString(scoreText, scoreX, scoreY);
+
+
+        // OPTIUNI
+        g.setFont(underDogFont.deriveFont(32f));
+        text = "MAIN MENU";
+        g.setColor(Color.white);
+        x = getCenteredX(text, g);
+        y = getCenteredY(g) + 160;
+        g.drawString(text, x, y);
+        if (commandCnt == 0) // pentru vizualiazarea pozitiei
+        {
+            FontMetrics fm = g.getFontMetrics();
+            int textWidth = fm.stringWidth(text);
+
+            g.drawString(">", x - 32, y);
+            g.drawString("<", x + textWidth + 20, y);
+        }
+
+        // EXIT BUTTON
+        text = "EXIT";
+        x = getCenteredX(text, g);
+        y += 96;
+        g.drawString(text, x, y);
+        if (commandCnt == 1)
+        {
+            FontMetrics fm = g.getFontMetrics();
+            int textWidth = fm.stringWidth(text);
+
+            g.drawString(">", x - 28, y);
+            g.drawString("<", x + textWidth + 12, y);
+        }
+    }
+
     private void drawHealthBar(Graphics2D g2, Player player) {
 
         Point p = new Point(20, 50);
@@ -259,4 +357,7 @@ public class UI {
         g2.drawString("Cooldown", x + 10, y - 5);
     }
 
+    public int getScore() {
+        return score;
+    }
 }
